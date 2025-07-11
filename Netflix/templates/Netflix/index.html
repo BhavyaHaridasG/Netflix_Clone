@@ -1,0 +1,210 @@
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+  
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Netflix Home</title>
+  
+  <style>
+    body {
+       margin: 0;
+       font-family: Arial, sans-serif;
+       background: url('https://us-west-2.graphassets.com/Am5rKdLUrSZS2vQnL0H52z/hS5sY58RSW64KSXS87EA') no-repeat center center fixed;
+       background-size: cover;
+       color: white;
+    }
+
+    header {
+      background-color: #000;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+
+    header h1 {
+      color: #e50914;
+      font-size: 32px;
+      margin: 0;
+    }
+
+    .search-box {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .search-box input, .search-box select, .search-box button {
+      padding: 10px;
+      border-radius: 4px;
+      border: none;
+      font-size: 16px;
+    }
+
+    .search-box button {
+      background-color: #e50914;
+      color: white;
+      cursor: pointer;
+    }
+
+    .search-box button:hover {
+      background-color: #f40612;
+    }
+
+    .section {
+      padding: 20px;
+    }
+
+    .section h2 {
+      font-size: 24px;
+      margin-bottom: 10px;
+      border-bottom: 1px solid #333;
+      padding-bottom: 5px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background-color: #222;
+      padding: 15px;
+      border-radius: 10px;
+      transition: transform 0.3s;
+    }
+
+    .card:hover {
+      transform: scale(1.05);
+      background-color: #333;
+    }
+
+    .title {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .detail {
+      font-size: 14px;
+      color: #bbb;
+    }
+
+    .no-results {
+      color: #999;
+      font-style: italic;
+      padding: 10px 0;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>NETFLIX</h1>
+    <form method="GET" action="" class="search-box">
+      <input type="text" name="q" placeholder="Search content..." value="{{ query }}" />
+      <select name="type">
+        <option value="" {% if not content_type %}selected{% endif %}>All</option>
+        <option value="Series" {% if content_type == "Series" %}selected{% endif %}>Series</option>
+        <option value="Movies" {% if content_type == "Movies" %}selected{% endif %}>Movies</option>
+        <option value="Anime" {% if content_type == "Anime" %}selected{% endif %}>Anime</option>
+        <option value="Sitcom" {% if content_type == "Sitcom" %}selected{% endif %}>Sitcom</option>
+        <option value="Cartoon" {% if content_type == "Cartoon" %}selected{% endif %}>Cartoon</option>
+      </select>
+      <button type="submit">Filter</button>
+    </form>
+  </header>
+
+ {% if Series %}
+  <div class="section">
+    <h2>Series</h2>
+    <div class="grid">
+      {% for i in Series %}
+        <div class="card">
+          <div class="title">{{ i.Name }}</div>
+          <div class="detail">Episodes: {{ i.Episodes }}</div>
+          <div class="detail">Genre: {{ i.Genre }}</div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+  {% elif content_type == "Series" %}
+    <div class="section"><p class="no-results">No series found for "{{ query }}"</p></div>
+  {% endif %}
+   
+
+
+  {% if Movies %}
+  <div class="section">
+    <h2>Movies</h2>
+    <div class="grid">
+      {% for i in Movies %}
+        <div class="card">
+          <div class="title">{{ i.Name }}</div>
+          <div class="detail">Genre: {{ i.Genre }}</div>
+        
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+  {% elif content_type == "Movies" %}
+    <div class="section"><p class="no-results">No movies found for "{{ query }}"</p></div>
+  {% endif %}
+
+  {% if Anime %}
+  <div class="section">
+    <h2>Anime</h2>
+    <div class="grid">
+      {% for i in Anime %}
+        <div class="card">
+          <div class="title">{{ i.Name }}</div>
+          <div class="detail">Season: {{ i.Season }}</div>
+          <div class="detail">Episodes: {{ i.Episodes }}</div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+  {% elif content_type == "Anime" %}
+    <div class="section"><p class="no-results">No anime found for "{{ query }}"</p></div>
+  {% endif %}
+
+  {% if Sitcom %}
+  <div class="section">
+    <h2>Sitcom</h2>
+    <div class="grid">
+      {% for i in Sitcom %}
+        <div class="card">
+          <div class="title">{{ i.Name }}</div>
+          <div class="detail">Seasons: {{ i.Seasons }}</div>
+          <div class="detail">Episodes: {{ i.Episodes }}</div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+  {% elif content_type == "Sitcom" %}
+    <div class="section"><p class="no-results">No sitcoms found for "{{ query }}"</p></div>
+  {% endif %}
+
+  {% if Cartoon %}
+  <div class="section">
+    <h2>Cartoon</h2>
+    <div class="grid">
+      {% for i in Cartoon %}
+        <div class="card">
+          <div class="title">{{ i.Name }}</div>
+          <div class="detail">Seasons: {{ i.Seasons }}</div>
+          <div class="detail">Episodes: {{ i.Episodes }}</div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+  {% elif content_type == "Cartoon" %}
+    <div class="section"><p class="no-results">No cartoons found for "{{ query }}"</p></div>
+  {% endif %}
+
+</body>
+</html>

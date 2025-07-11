@@ -1,0 +1,45 @@
+body {
+  background-color: #141414;
+  color: #ffffff;
+}
+
+header {
+  background-color: #141414;
+}
+
+header h1 {
+  color: #e50914;
+}
+
+.search-box button,
+.card-buttons .btn {
+  background-color: #e50914;
+  color: white;
+}
+
+.card-buttons .btn:hover {
+  background-color: #f40612;
+}
+
+.section h2 {
+  border-bottom: 1px solid #333;
+}
+
+.card {
+  background-color: #222;
+  color: white;
+  box-shadow: 0 0 10px rgba(229, 9, 20, 0.3);
+}
+
+.card:hover {
+  background-color: #333;
+  box-shadow: 0 0 15px rgba(229, 9, 20, 0.5);
+}
+
+.detail {
+  color: #b3b3b3;
+}
+
+.no-results {
+  color: #999;
+}
