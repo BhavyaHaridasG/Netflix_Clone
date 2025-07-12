@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Netflix Signup Flow</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      background-color: #fff;
+      color: #000;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .logo {
+      color: #e50914;
+      font-size: 32px;
+      font-weight: bold;
+      letter-spacing: 2px;
+    }
+
+    .signin {
+      font-weight: bold;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: auto;
+      padding: 2rem;
+      text-align: center;
+    }
+
+    .step-title {
+      font-size: 22px;
+      font-weight: bold;
+      margin-bottom: 1rem;
+    }
+
+    .points {
+      text-align: left;
+      max-width: 500px;
+      margin: 1rem auto;
+    }
+
+    .points li {
+      margin-bottom: 1rem;
+      font-size: 18px;
+    }
+
+    .points li::before {
+      content: '✔';
+      color: #e50914;
+      margin-right: 0.5rem;
+    }
+
+    .btn {
+      background-color: #e50914;
+      color: #fff;
+      padding: 1rem 2rem;
+      border: none;
+      font-size: 18px;
+      border-radius: 4px;
+      margin-top: 2rem;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      background-color: #f6121d;
+    }
+
+    .plans {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .plan-card {
+      flex: 1 1 200px;
+      border: 2px solid #ddd;
+      border-radius: 10px;
+      padding: 1rem;
+      text-align: left;
+      min-width: 220px;
+      cursor: pointer;
+    }
+
+    .plan-card.selected {
+      border-color: #e50914;
+      box-shadow: 0 0 10px #e50914;
+    }
+
+    .plan-title {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+    }
+
+    .plan-detail {
+      font-size: 14px;
+      margin-bottom: 0.5rem;
+    }
+
+    .most-popular {
+      background-color: #e50914;
+      color: white;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 12px;
+      display: inline-block;
+      margin-bottom: 0.5rem;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .payment-option {
+      text-align: left;
+      margin-bottom: 1rem;
+    }
+
+    .payment-option label {
+      font-size: 18px;
+      display: block;
+      margin: 0.5rem 0;
+    }
+
+    .payment-form input {
+      padding: 10px;
+      width: 100%;
+      margin: 0.5rem 0;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    .confirmation-text {
+      font-size: 18px;
+      color: #555;
+      max-width: 500px;
+      margin: 1rem auto;
+    }
+
+    @media (max-width: 768px) {
+      .plans {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <div class="logo">NETFLIX</div>
+    <div class="signin">Sign In</div>
+  </div>
+
+  <!-- Page 1 -->
+  <div class="container" id="page1">
+    <div class="step-title">STEP 1 OF 4<br>Choose your plan.</div>
+    <ul class="points">
+      <li>No commitments, cancel anytime.</li>
+      <li>Everything on Netflix for one low price.</li>
+      <li>No ads and no extra fees. Ever.</li>
+    </ul>
+    <button class="btn" onclick="goToPage2()">Next</button>
+  </div>
+
+  <!-- Page 2 -->
+  <div class="container hidden" id="page2">
+    <div class="step-title">STEP 2 OF 4<br>Select your plan</div>
+    <div class="plans">
+      <div class="plan-card" onclick="selectPlan(this)">
+        <div class="plan-title">Mobile<br><small>480p</small></div>
+        <div class="plan-detail">₹149/month</div>
+      </div>
+      <div class="plan-card selected" onclick="selectPlan(this)">
+        <div class="most-popular">Most Popular</div>
+        <div class="plan-title">Basic<br><small>720p</small></div>
+        <div class="plan-detail">₹199/month</div>
+      </div>
+      <div class="plan-card" onclick="selectPlan(this)">
+        <div class="plan-title">Standard<br><small>1080p</small></div>
+        <div class="plan-detail">₹499/month</div>
+      </div>
+      <div class="plan-card" onclick="selectPlan(this)">
+        <div class="plan-title">Premium<br><small>4K + HDR</small></div>
+        <div class="plan-detail">₹649/month</div>
+      </div>
+    </div>
+    <button class="btn" onclick="goToPage3()">Next</button>
+  </div>
+
+  <!-- Page 3 -->
+  <div class="container hidden" id="page3">
+    <div class="step-title">STEP 3 OF 4<br>Set up your payment</div>
+    <div class="payment-option">
+      <label><input type="radio" name="payment" value="card" onclick="toggleForm('card')" checked> Credit or Debit Card</label>
+      <label><input type="radio" name="payment" value="upi" onclick="toggleForm('upi')"> UPI</label>
+      <label><input type="radio" name="payment" value="wallet" onclick="toggleForm('wallet')"> Wallet</label>
+    </div>
+
+    <div class="payment-form" id="card-form">
+      <input type="text" placeholder="Card Number" />
+      <input type="text" placeholder="Name on Card" />
+      <input type="text" placeholder="MM/YY" />
+      <input type="text" placeholder="CVV" />
+    </div>
+
+    <div class="payment-form hidden" id="upi-form">
+      <input type="text" placeholder="Enter your UPI ID" />
+    </div>
+
+    <div class="payment-form hidden" id="wallet-form">
+      <input type="text" placeholder="Enter wallet mobile number" />
+    </div>
+
+    <button class="btn" onclick="goToPage4()">Start Membership</button>
+  </div>
+
+  <!-- Page 4 -->
+  <div class="container hidden" id="page4">
+    <p style="font-weight: bold; font-size: 14px; color: #333;">STEP 4 OF 4</p>
+    <h1 style="font-size: 32px; margin-top: 10px; color: #222;">Finish setting up your account</h1>
+    <p class="confirmation-text">
+      Netflix is personalized for you. Create a password to watch on any device at any time.
+    </p>
+    <button class="btn" onclick="alert('Welcome to Netflix!')">Get Started</button>
+  </div>
+
+  <script>
+    function goToPage2() {
+      document.getElementById("page1").classList.add("hidden");
+      document.getElementById("page2").classList.remove("hidden");
+    }
+
+    function goToPage3() {
+      document.getElementById("page2").classList.add("hidden");
+      document.getElementById("page3").classList.remove("hidden");
+    }
+
+    function goToPage4() {
+      document.getElementById("page3").classList.add("hidden");
+      document.getElementById("page4").classList.remove("hidden");
+    }
+
+    function selectPlan(el) {
+      document.querySelectorAll(".plan-card").forEach(card => {
+        card.classList.remove("selected");
+      });
+      el.classList.add("selected");
+    }
+
+    function toggleForm(method) {
+      document.getElementById("card-form").classList.add("hidden");
+      document.getElementById("upi-form").classList.add("hidden");
+      document.getElementById("wallet-form").classList.add("hidden");
+      document.getElementById(method + "-form").classList.remove("hidden");
+    }
+  </script>
+</body>
+</html>
